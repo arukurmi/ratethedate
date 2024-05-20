@@ -2,7 +2,7 @@ import mongoose, {Schema} from "mongoose";
 
 const traitSchema = new Schema(
     {
-        traitname: {
+        traitName: {
             type: String,
             required: true,
             unique: true,
