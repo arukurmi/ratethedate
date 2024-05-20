@@ -8,25 +8,43 @@ const userSchema = new Schema(
             unique: true,
             lowercase: true,
             trim: true,
-            index: true
+            index: true,
         },
         email: {
             type: String,
             required: true,
             unique: true,
             lowercase: true,
-            trim: true
+            trim: true,
+            index: true,
         },
         name: {
             type: String,
             required: true,
             trim: true,
         },
-        phonenumber: {
+        phone: {
             type: Number,
             required: true,
             unique: true,
+            index: true,
+        },
+        password: {
+            type: password,
+            required: [true, "Password is Required"],
+        },
+        partnerId:{
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+        userAvatar: {
+            type: String,
+        },
+        refreshToken: {
+            type: String,
         }
+    }, {
+        timestamps: true,
     }
 )
 
