@@ -12,31 +12,31 @@ const ratingSchema = new Schema(
             required: true,
             index: true,
         },
-        trait1Rating: {
-            type: String,
-        },
-        trait2Rating: {
-            type: String,
-        },
-        trait3Rating: {
-            type: String,
-        },
-        trait4Rating: {
-            type: String,
-        },
-        trait5Rating: {
-            type: String,
-        },
-        // traitIds: [
-        //     {
-        //         type: String,
-        //     }
-        // ],
-        // traitRatings: [
-        //     {
-        //         type: String,
-        //     }
-        // ],
+        // trait1Rating: {
+        //     type: String,
+        // },
+        // trait2Rating: {
+        //     type: String,
+        // },
+        // trait3Rating: {
+        //     type: String,
+        // },
+        // trait4Rating: {
+        //     type: String,
+        // },
+        // trait5Rating: {
+        //     type: String,
+        // },
+        traitIds: [
+            {
+                type: String,
+            }
+        ],
+        traitRatings: [
+            {
+                type: String,
+            }
+        ],
         ratingComment: {
             type: String,
         },
