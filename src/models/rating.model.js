@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const ratingSchema = new Schema(
     {
@@ -30,20 +30,20 @@ const ratingSchema = new Schema(
         traitIds: [
             {
                 type: String,
-            }
+            },
         ],
         traitRatings: [
             {
                 type: String,
-            }
+            },
         ],
         ratingComment: {
             type: String,
         },
-    }, {
+    },
+    {
         timestamps: true,
     }
-)
+);
 
-
-export const Rating = mongoose.model("Rating", ratingSchema)
+export const Rating = mongoose.model("Rating", ratingSchema);

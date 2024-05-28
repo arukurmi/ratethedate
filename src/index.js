@@ -7,22 +7,22 @@ import { app } from "./app.js";
 // import { DB_NAME } from "./constants";
 
 dotenv.config({
-    path: './env',
-})
+    path: "./env",
+});
 
 connectDB()
-.then(() => {
-    const port_var = process.env.PORT || 8000;
-    app.on("error", (err) => {
-        console.log(`Error while strating server: ${err}`);
+    .then(() => {
+        const port_var = process.env.PORT || 8000;
+        app.on("error", (err) => {
+            console.log(`Error while strating server: ${err}`);
+        });
+        app.listen(port_var, () => {
+            console.log(`Server is running on port ${port_var}`);
+        });
     })
-    app.listen(port_var, () => {
-        console.log(`Server is running on port ${port_var}`);
+    .catch((err) => {
+        console.log("MONGO ERROR! =>  ", err);
     });
-})
-.catch((err) => {
-    console.log("MONGO ERROR! =>  ", err);
-})
 
 /* 
 import { express } from "express";

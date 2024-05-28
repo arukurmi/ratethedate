@@ -1,4 +1,4 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const traitSchema = new Schema(
     {
@@ -8,10 +8,10 @@ const traitSchema = new Schema(
             unique: true,
             index: true,
         },
-    }, {
+    },
+    {
         timestamps: true,
     }
-)
+);
 
-
-export const Trait = mongoose.model("Trait", traitSchema)
+export const Trait = mongoose.model("Trait", traitSchema);
