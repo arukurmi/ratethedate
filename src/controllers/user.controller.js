@@ -176,4 +176,90 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 })
 
-export { registerUser, loginUser, logoutUser, refreshAccessToken };
+const changePassword = asyncHandler(async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+
+    if (!oldPassword && newPassword) throw new ApiError(400, "Invalid request");
+    
+    const user = await User.findById(req.user?._id);
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
+    
+    if (!isPasswordCorrect) throw new ApiError(400, "invalid old password");
+
+    user.password = newPassword;
+    await user.save({ validateBeforeSave: false });
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, {}, "Password Changed successfully"));
+
+})
+
+const getCurrentUser = asyncHandler(async (req, res) => {
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                req.user,
+                "User fetched successfully"
+            )
+        );
+})
+
+const updateUserDetails = asyncHandler(async (req, res) => {
+    const { name, email } = req.body;
+
+    if (!name && !email) throw new ApiError(400, "All Fields are Required");
+
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $set: {
+                name,
+                email
+            }
+        },
+        { new: true }
+    ).select("-password -refreshToken");
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(200, user, "Details Updated Successfully!")
+    )
+})
+
+const updateUserAvatar = asyncHandler(async (req, res) => {
+    const avatarLocalPath = req.file?.path;
+
+    if (!avatarLocalPath) throw new ApiError(400, "Avatar file is missing");
+
+    const avatarCloudinary = await uploadOnCloudinary(avatarLocalPath);
+
+    if (!avatarCloudinary?.url) throw new (ApiError(400, "Cloudinary upload error"));
+
+    await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $set: {
+                userAvatar: avatarCloudinary.url,
+            },
+        },
+        { new: true }
+    ).select("-password -refreshToken");
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, user, "User Avatar Updated Successfully!"));
+})
+
+export {
+    registerUser,
+    loginUser,
+    logoutUser,
+    refreshAccessToken,
+    getCurrentUser,
+    updateUserDetails,
+    updateUserAvatar,
+};
